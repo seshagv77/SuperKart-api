@@ -64,7 +64,24 @@ def predict_sales():
     except Exception as e:
         print("❌ Error during prediction:", str(e))
         return jsonify({'error': f"Prediction failed: {str(e)}"}), 500
+# Batch File Upload Prediction Endpoint (CSV)
+@app.route("/v1/predict_batch", methods=["POST"])
+def predict_batch():
+    if model is None:
+        return jsonify({"status": "error", "message": "Model not loaded"}), 500
 
+    try:
+        if 'file' not in request.files:
+            return jsonify({"status": "error", "message": "No file uploaded under key 'file'"}), 400
+
+        file = request.files['file']
+        content = file.read().decode('utf-8')
+        df = pd.read_csv(io.StringIO(content))
+
+        predictions = model.predict(df).tolist()
+        return jsonify({"status": "success", "predicted_sales": predictions})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
 # Run the app (for local testing only)
 if __name__ == '__main__':
     superkart_api.run(debug=True)
