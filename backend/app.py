@@ -65,7 +65,7 @@ def predict_sales():
         print("❌ Error during prediction:", str(e))
         return jsonify({'error': f"Prediction failed: {str(e)}"}), 500
 # Batch File Upload Prediction Endpoint (CSV)
-@app.route("/v1/predict_batch", methods=["POST"])
+@superkart_api.route("/v1/predict_batch", methods=["POST"])
 def predict_batch():
     if model is None:
         return jsonify({"status": "error", "message": "Model not loaded"}), 500
