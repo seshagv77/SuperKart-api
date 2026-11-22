@@ -44,7 +44,7 @@ product_data = {
 if st.button("Predict", type='primary'):
     try:
         response = requests.post(
-            "https://fantastic-space-winner-xxjg7gpjrxq2pjwv-7086.app.github.dev/v1/predict",
+            "https://fantastic-space-winner-xxjg7gpjrxq2pjwv-7860.app.github.dev/v1/predict",
             json=product_data
         )
         if response.status_code == 200:
